@@ -12,6 +12,15 @@ router.get("/api/workouts", (req, res) => {
       });
   });
 
+  //getting workout for past week
+  router.get("/api/workouts/range", ({}, res) => {
+    db.Workout.find({}).then((dbWorkout) => {
+      res.json(dbWorkout);
+    }).catch(err => {
+      res.status(400).json(err);
+    });
+  });
+
   //create new workout
 
   router.post("/api/workouts", (req,res) => {
@@ -24,6 +33,8 @@ router.get("/api/workouts", (req, res) => {
       });
   });
 
+  //update workout
+  
 
 
 
