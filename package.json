@@ -19,6 +19,8 @@
   "homepage": "https://github.com/zdeal1026/fitnessTracker#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.13.7"
+    "mongoose": "^5.13.7",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.12"
   }
 }
