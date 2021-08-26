@@ -1,7 +1,7 @@
 const db = require("../models");
 const router = require("express").Router();
 
-//getting workouts
+//getting workouts and adding exercise duration
 router.get("/api/workouts", (req, res) => {
   db.Workout.aggregate([{ $set: { 
     totalDuration: { $sum: "$exercises.duration" },
@@ -14,15 +14,6 @@ router.get("/api/workouts", (req, res) => {
     console.error(err);
     res.json(err);
   })});
-
-  //getting workout for past week
-  router.get("/api/workouts/range", ({}, res) => {
-    db.Workout.find({}).then((dbWorkout) => {
-      res.json(dbWorkout);
-    }).catch(err => {
-      res.status(400).json(err);
-    });
-  });
 
   //create new workout
 
