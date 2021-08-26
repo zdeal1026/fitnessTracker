@@ -3,14 +3,17 @@ const router = require("express").Router();
 
 //getting workouts
 router.get("/api/workouts", (req, res) => {
-    db.Workout.find({})
-      .then(dbWorkout => {
-        res.json(dbWorkout);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-  });
+  db.Workout.aggregate([{ $set: { 
+    totalDuration: { $sum: "$exercises.duration" },
+  }},
+])
+  .then((workouts) => {
+    res.json(workouts);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.json(err);
+  })});
 
   //getting workout for past week
   router.get("/api/workouts/range", ({}, res) => {
