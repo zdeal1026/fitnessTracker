@@ -46,8 +46,9 @@ For any questions please use the contact information below
 
 ## Contact
 
- email jedimastershake@gmail.com, 
- github repo https://github.com/zdeal1026/fitnessTracker
+ email jedimastershake@gmail.com
 
 ## Links
 
+deployed application on heroku https://pure-brushlands-86892.herokuapp.com/?id=61283d3f0672330016977d95
+github repo https://github.com/zdeal1026/fitnessTracker
