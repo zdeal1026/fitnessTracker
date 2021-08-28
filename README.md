@@ -51,7 +51,10 @@ For any questions please use the contact information below
 ## Links
 
 deployed application on heroku https://pure-brushlands-86892.herokuapp.com/?id=61283d3f0672330016977d95
+
 github repo https://github.com/zdeal1026/fitnessTracker
+
 walkthrough video https://drive.google.com/file/d/1xLJ4ivQ549WkWJDL873W3wrraeOzQsrZ/view
+
 
 ![Fitness Tracker](https://user-images.githubusercontent.com/82068157/131226816-466489a2-e33c-482e-bd81-9a478c709822.png)
