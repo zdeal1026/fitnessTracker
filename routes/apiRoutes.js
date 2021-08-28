@@ -2,7 +2,8 @@ const db = require("../models");
 const router = require("express").Router();
 const Workout = require("../models/workout.js")
 
-//getting workouts and adding exercise duration
+
+//gets all workouts
 router.get("/api/workouts", (req, res) => {
   Workout.aggregate([{ $set: { 
     totalDuration: { $sum: "$exercises.duration" },
@@ -12,56 +13,54 @@ router.get("/api/workouts", (req, res) => {
     res.json(workouts);
   })
   .catch((err) => {
-    console.error(err);
-    res.json(err);
+    res.status(400).json(err);
   })});
 
-  
-   //gettting week data with aggregate
-   router.get("/api/workouts/range", (req, res) => {
-    Workout.aggregate([
-      { $set: {
-        totalDuration: { $sum : "$exercises.duration"},
-      },
-    },
-  ]  
-    ).sort({ "day": -1 })
-    .limit(7)
-    
-    .then((workouts) => {
-      workouts.reverse();
-      res.json(workouts);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.json(err);
-    });
+
+//posts new workout
+router.post("/api/workouts", (req, res) => {
+  Workout.create(req.body)
+  .then((workout) => {
+    res.json(workout);
+  })
+  .catch((err) => {
+    res.status(400).json(err);
   });
+});
 
-  //create new workout
-
-  router.post("/api/workouts", (req,res) => {
-      Workout.create(req.body)
-      .then((workout) => {
-          res.json(workout);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
-  });
-
-  //update workout
-
+//updates workout with id
 router.put("/api/workouts/:id", (req, res) => {
-    Workout.findByIdAndUpdate(
-      { _id: req.params.id }, { exercises: req.body }
-    ).then((dbWorkout) => {
-      res.json(dbWorkout);
-    }).catch(err => {
-      res.status(400).json(err);
-    });
- });
+  Workout.findOneAndUpdate(
+    { _id: req.params.id },
+    { $push: { exercises: req.body } },
+    { new: true }
+  ).then((workout) => {
+    res.json(workout);
+  })
+  .catch((err) => {
+    res.status(400).json(err);
+  });
+});
 
+//gets weeks workout
+router.get("/api/workouts/range", (req, res) => {
+  Workout.aggregate([
+    {
+    $set: {
+      totalDuration: { $sum : "$exercises.duration"},
+    },
+  },
+]  
+  ).sort({ "day": -1 })
+  .limit(7)
+  
+  .then((workouts) => {
+    workouts.reverse();
+    res.json(workouts);
+  })
+  .catch((err) => {
+    res.status(400).json(err);
+  });
+});
 
-
-  module.exports = router
+module.exports = router;
