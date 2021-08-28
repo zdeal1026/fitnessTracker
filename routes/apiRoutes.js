@@ -36,11 +36,12 @@ router.get("/api/workouts", (req, res) => {
       res.json(err);
     });
   });
+
   //create new workout
 
   router.post("/api/workouts", (req,res) => {
       db.Workout.create(req.body)
-      .then((dbWorkout) => {
+      .then((workout) => {
           res.json(workout);
       })
       .catch(err => {
